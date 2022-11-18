@@ -1,26 +1,20 @@
 package com.app.clinicamedica.dao.imp_dao;
 
 
-import com.app.clinicamedica.dao.IPacienteDao;
+import com.app.clinicamedica.dao.DaoInterface;
 import com.app.clinicamedica.models.Paciente;
 import com.app.clinicamedica.utils.ConexionBD;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.stereotype.Repository;
 
 import java.sql.*;
 import java.util.List;
 
-public class PacienteDaoImplH2 implements IPacienteDao {
+@Repository
+public class PacienteDaoImplH2 implements DaoInterface<Paciente> {
 
     private static final Logger LOGGER = LogManager.getLogger(PacienteDaoImplH2.class);
-
-    private final static String CREATE_TABLE_PACIENTE = "create table if not exists paciente " +
-            "(idPaciente int auto_increment primary key," +
-            "nombre varchar(255)," +
-            "apellido varchar(255),"+
-            "domicilio varchar(255)," +
-            "dni varchar(25)," +
-            "fechaAlta DATE);";
 
     public Connection getConexcion() throws SQLException, ClassNotFoundException {
         return ConexionBD.conectarseBd();
@@ -29,10 +23,6 @@ public class PacienteDaoImplH2 implements IPacienteDao {
 
     @Override
     public Paciente crear(Paciente paciente) throws SQLException, ClassNotFoundException {
-
-        Statement stmtCrearTabla = getConexcion().createStatement();
-        stmtCrearTabla.execute(CREATE_TABLE_PACIENTE);
-
 
         PreparedStatement queryInsert = getConexcion().prepareStatement("INSERT INTO paciente " +
                 "(nombre,apellido,domicilio,dni, fechaAlta) " +

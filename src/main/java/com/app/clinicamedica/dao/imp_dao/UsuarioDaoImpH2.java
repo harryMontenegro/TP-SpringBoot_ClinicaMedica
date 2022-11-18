@@ -1,13 +1,14 @@
 package com.app.clinicamedica.dao.imp_dao;
 ;
 
-import com.app.clinicamedica.dao.IUsuarioDao;
+import com.app.clinicamedica.dao.DaoInterface;
 import com.app.clinicamedica.models.Usuario;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-public class UsuarioDaoImpH2 implements IUsuarioDao {
-
+@Repository
+public class UsuarioDaoImpH2 implements DaoInterface<Usuario> {
 
     @Override
     public Usuario crear(Usuario usuario) {

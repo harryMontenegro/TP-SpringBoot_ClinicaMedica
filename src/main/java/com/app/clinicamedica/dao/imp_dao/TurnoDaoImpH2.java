@@ -1,24 +1,20 @@
 package com.app.clinicamedica.dao.imp_dao;
 
 
-import com.app.clinicamedica.dao.ITurnoDao;
+import com.app.clinicamedica.dao.DaoInterface;
 import com.app.clinicamedica.models.Turno;
 import com.app.clinicamedica.utils.ConexionBD;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.stereotype.Repository;
 
 import java.sql.*;
 import java.util.List;
 
-public class TurnoDaoImpH2 implements ITurnoDao {
+@Repository
+public class TurnoDaoImpH2 implements DaoInterface<Turno> {
 
     private static final Logger LOGGER = LogManager.getLogger(TurnoDaoImpH2.class);
-
-    private final static String CREATE_TABLE_TURNO = "create table if not exists turno " +
-            "(idTurno int auto_increment primary key," +
-            "idOdontologo int," +
-            "idPaciente int,"+
-            "fechaTurno DATE);";
 
     public Connection getConexcion() throws SQLException, ClassNotFoundException {
         return ConexionBD.conectarseBd();
@@ -26,8 +22,6 @@ public class TurnoDaoImpH2 implements ITurnoDao {
 
     @Override
     public Turno crear(Turno turno) throws SQLException, ClassNotFoundException {
-        Statement stmtCrearTabla = getConexcion().createStatement();
-        stmtCrearTabla.execute(CREATE_TABLE_TURNO);
 
         PreparedStatement queryInsert = getConexcion().prepareStatement("INSERT INTO turno " +
                 "(idOdontologo,idPaciente,fechaTurno) " +

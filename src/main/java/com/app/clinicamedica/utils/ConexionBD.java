@@ -7,7 +7,8 @@ import java.sql.SQLException;
 public class ConexionBD {
 
     private final static String DB_JDBC_DRIVER = "org.h2.Driver";
-    private final static String DB_URL = "jdbc:h2:~/clinica_medica";
+    //private final static String DB_URL = "jdbc:h2:~/clinica_medica;DB_CLOSE_DELAY=-1;INIT=RUNSCRIPT FROM 'create.sql'";
+    private final static String DB_URL = "jdbc:h2:tcp://localhost/~/clinica_medica;DB_CLOSE_DELAY=-1;INIT=RUNSCRIPT FROM './src/main/resources/create.sql'";
     private final static String DB_USER ="root";
     private final static String DB_PASSWORD = "";
     private static Connection connection;

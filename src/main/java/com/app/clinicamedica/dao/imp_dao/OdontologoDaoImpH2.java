@@ -1,23 +1,19 @@
 package com.app.clinicamedica.dao.imp_dao;
 
-import com.app.clinicamedica.dao.IOdontologoDao;
+import com.app.clinicamedica.dao.DaoInterface;
 import com.app.clinicamedica.models.Odontologo;
 import com.app.clinicamedica.utils.ConexionBD;
 import org.apache.logging.log4j.*;
+import org.springframework.stereotype.Repository;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class OdontologoDaoImpH2 implements IOdontologoDao {
+@Repository
+public class OdontologoDaoImpH2 implements DaoInterface<Odontologo> {
 
     private static final Logger LOGGER = LogManager.getLogger(OdontologoDaoImpH2.class);
-
-    private final static String CREATE_TABLE_ODONTOLOGO = "create table if not exists odontologo " +
-            "(idOdontologo int auto_increment primary key," +
-            "nombre varchar(255)," +
-            "apellido varchar(255),"+
-            "matricula varchar(255))";
 
     public Connection getConexcion() throws SQLException, ClassNotFoundException {
         return ConexionBD.conectarseBd();
@@ -25,10 +21,6 @@ public class OdontologoDaoImpH2 implements IOdontologoDao {
 
     @Override
     public Odontologo crear(Odontologo odontologo) throws SQLException, ClassNotFoundException {
-
-        Statement stmtCrearTabla = getConexcion().createStatement();
-        stmtCrearTabla.execute(CREATE_TABLE_ODONTOLOGO);
-
 
         PreparedStatement queryInsert = getConexcion().prepareStatement("INSERT INTO odontologo " +
                 "(nombre,apellido,matricula) " +
@@ -85,7 +77,7 @@ public class OdontologoDaoImpH2 implements IOdontologoDao {
 
     @Override
     public void eliminar(int id) {
-        try (PreparedStatement stmt = getConexcion().prepareStatement("DELETED FROM odontologo WHERE idOdontologo = ?")){
+        try (PreparedStatement stmt = getConexcion().prepareStatement("DELETE FROM odontologo WHERE idOdontologo = ?")){
             stmt.setInt(1, id);
             stmt.executeUpdate();
         }catch (SQLException | ClassNotFoundException e){
